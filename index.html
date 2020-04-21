@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale" />
+    <title>Product App</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body>
+    <div class="nav-bar"></div>
+
+    <div id="app">
+      <div class="product">
+        <div class="product-image">
+          <img :src="image" alt="brown boots" />
+        </div>
+
+        <div class="product-info">
+          <h1>{{ product }}</h1>
+          <p v-if="inventory > 10" class="inventory badge">
+            <strong>In Stock</strong>
+          </p>
+          <p
+            v-else-if="inventory <= 10 && inventory > 0"
+            class="inventory badge"
+          >
+            <strong>Almost sold out!</strong>
+          </p>
+          <p v-else class="inventory badge"><strong>Out of Stock</strong></p>
+          <span v-if="onSale" class="on-sale badge">On Sale!</span>
+          <p class="desc">{{ description }}</p>
+          <ul>
+            <li v-for="detail in details">{{ detail }}</li>
+          </ul>
+
+          <div>
+            <span>Available colors:</span>
+            <div v-for="variant in variants" :key="variant.variantId">
+              <span
+                @mouseover="updateProduct(variant.variantImage)"
+                class="badge"
+                >{{ variant.variantColor }}</span
+              >
+            </div>
+          </div>
+
+          <div>
+            <span>Available sizes:</span>
+            <select>
+              <option v-for="size in sizes" :key="size">{{ size }}</option>
+            </select>
+          </div>
+
+          <button v-on:click="addToCart">Add to Cart</button>
+          <a href="#" v-on:click="removeFromCart">Remove from Cart</button>
+          <div class="cart">
+            <p>Cart({{cart}})</p>
+          </div>
+          <hr />
+          <a :href="link">more about boots</a>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="main.js"></script>
+  </body>
+</html>
