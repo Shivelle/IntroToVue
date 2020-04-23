@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta name="viewport" content="width=device-width, initial-scale" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Product App</title>
     <link rel="stylesheet" type="text/css" href="style.css" />
   </head>
@@ -15,18 +15,12 @@
         </div>
 
         <div class="product-info">
-          <h1>{{ product }}</h1>
-          <p v-if="inventory > 10" class="inventory badge">
+          <h1>{{ title }}</h1>
+          <p v-if="inStock" class="inventory badge">
             <strong>In Stock</strong>
           </p>
-          <p
-            v-else-if="inventory <= 10 && inventory > 0"
-            class="inventory badge"
-          >
-            <strong>Almost sold out!</strong>
-          </p>
-          <p v-else :class="{ lineThrough: !inStock }"><strong>Out of Stock</strong></p>
-          <span v-if="onSale" class="on-sale badge">On Sale!</span>
+          <p v-else :class="{ lineThrough: !inStock }" class= "badge"><strong>Out of Stock</strong></p>
+          <span v-if="onSale" class="on-sale badge">{{ sale }}</span>
           <p class="desc">{{ description }}</p>
           <ul>
             <li v-for="detail in details">{{ detail }}</li>
@@ -34,10 +28,10 @@
 
           <div>
             <span>Available colors:</span>
-            <div v-for="variant in variants" :key="variant.variantId"
+            <div v-for="(variant, index) in variants" :key="variant.variantId"
             class="color-box"
             :style="{ backgroundColor: variant.variantColor }"
-            @mouseover="updateProduct(variant.variantImage)">
+            @mouseover="updateProduct(index)">
             </div>
           </div>
 
