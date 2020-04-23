@@ -4,7 +4,8 @@ var app = new Vue({
     product: "Brown boots",
     image: "./assets/img/boots/boots1.jpeg",
     link: "https://en.wikipedia.org/wiki/Boot",
-    inventory: 8,
+    inventory: 0,
+    inStock: false,
     onSale: true,
     details: ["80% leatherette", "20% polyester", "gender-neutral"],
     variants: [

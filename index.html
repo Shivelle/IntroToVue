@@ -25,7 +25,7 @@
           >
             <strong>Almost sold out!</strong>
           </p>
-          <p v-else class="inventory badge"><strong>Out of Stock</strong></p>
+          <p v-else :class="{ lineThrough: !inStock }"><strong>Out of Stock</strong></p>
           <span v-if="onSale" class="on-sale badge">On Sale!</span>
           <p class="desc">{{ description }}</p>
           <ul>
@@ -34,12 +34,10 @@
 
           <div>
             <span>Available colors:</span>
-            <div v-for="variant in variants" :key="variant.variantId">
-              <span
-                @mouseover="updateProduct(variant.variantImage)"
-                class="badge"
-                >{{ variant.variantColor }}</span
-              >
+            <div v-for="variant in variants" :key="variant.variantId"
+            class="color-box"
+            :style="{ backgroundColor: variant.variantColor }"
+            @mouseover="updateProduct(variant.variantImage)">
             </div>
           </div>
 
@@ -50,7 +48,10 @@
             </select>
           </div>
 
-          <button v-on:click="addToCart">Add to Cart</button>
+          <button v-on:click="addToCart"
+                  :disabled="!inStock"
+                  :class="{ disabledButton: !inStock }"
+                  >Add to Cart</button>
           <a href="#" v-on:click="removeFromCart">Remove from Cart</button>
           <div class="cart">
             <p>Cart({{cart}})</p>
