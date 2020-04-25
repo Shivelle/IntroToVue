@@ -1,3 +1,5 @@
+Vue.config.devtools = true;
+
 Vue.component("product", {
   props: {
     premium: Boolean,
@@ -42,9 +44,6 @@ Vue.component("product", {
             :class="{ disabledButton: !inStock }"
             >Add to Cart</button>
     <a href="#" v-on:click="removeFromCart">Remove from Cart</button>
-    <div class="cart">
-      <p>Cart({{cart}})</p>
-    </div>
     <hr />
     <a :href="link">more about boots</a>
   </div>
@@ -72,20 +71,20 @@ Vue.component("product", {
         },
       ],
       sizes: [37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48],
-      cart: 0,
       onSale: true,
       description:
         "A boot, plural boots, is a type of specific footwear. Most boots mainly cover the foot and the ankle, while some also cover some part of the lower calf.",
     };
   },
   methods: {
-    addToCart() {
-      this.cart += 1;
+    addToCart: function () {
+      this.$emit("add-to-cart", this.variants[this.selectedVariant].variantId);
     },
-    removeFromCart() {
-      if (this.cart > 0) {
-        this.cart -= 1;
-      }
+    removeFromCart: function () {
+      this.$emit(
+        "remove-from-cart",
+        this.variants[this.selectedVariant].variantId
+      );
     },
     updateProduct(index) {
       this.selectedVariant = index;
@@ -135,6 +134,19 @@ Vue.component("product-details", {
 var app = new Vue({
   el: "#app",
   data: {
-    premium: true,
+    premium: false,
+    cart: [],
+  },
+  methods: {
+    updateCart(id) {
+      this.cart.push(id);
+    },
+    removeItem(id) {
+      for (var i = this.cart.length - 1; i >= 0; i--) {
+        if (this.cart[i] === id) {
+          this.cart.splice(i, 1);
+        }
+      }
+    },
   },
 });
