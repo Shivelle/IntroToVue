@@ -50,7 +50,7 @@ Vue.component("product", {
     <a :href="link">more about boots</a>
   </div>
 
-  <product-tabs :reviews="reviews"></product-tabs>
+  <product-tabs :reviews="reviews" :shipping="shipping" :details="details"></product-tabs>
 
 </div>  
   `,
@@ -267,15 +267,16 @@ Vue.component("product-tabs", {
     </div>
 
     <div v-show="selectedTab === 'Shipping'">
-      <div>{{ shipping }}</div>
+      <p>Shipping cost: {{ shipping }}</p>
     </div>
-    
+
     <div v-show="selectedTab === 'Details'">
-      <p>{{ }}</p>
+    Details:
       <ul>
         <li v-for="detail in details">{{ detail }}</li>
-      </ul>    
-    </div>    
+      </ul>
+  </div>
+
   </div>
   `,
   data() {
